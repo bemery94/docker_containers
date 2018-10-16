@@ -111,10 +111,9 @@ RUN /bin/bash -c '. /opt/ros/indigo/setup.bash; catkin_init_workspace /home/bren
 RUN /bin/bash -c '. /opt/ros/indigo/setup.bash; cd /home/brendan/catkin_ws; catkin_make'
 RUN echo "source ~/catkin_ws/devel/setup.bash" >> /home/brendan/.bashrc
 
-RUN chown ${NB_USER1}:${NB_GID} -R /home/brendan/catkin_ws
-
 RUN /bin/bash -c 'git clone https://github.com/personalrobotics/kinfu_ros.git /home/brendan/catkin_ws/src/kinfu_ros'
 
+RUN chown ${NB_USER1}:${NB_GID} -R /home/brendan/catkin_ws
 USER ${NB_USER1}
 
 EXPOSE 8888
