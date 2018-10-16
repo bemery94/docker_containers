@@ -112,8 +112,9 @@ RUN /bin/bash -c '. /opt/ros/indigo/setup.bash; cd /home/brendan/catkin_ws; catk
 RUN echo "source ~/catkin_ws/devel/setup.bash" >> /home/brendan/.bashrc
 
 RUN /bin/bash -c 'git clone https://github.com/personalrobotics/kinfu_ros.git /home/brendan/catkin_ws/src/kinfu_ros'
-
+RUN /bin/bash -c '. /opt/ros/indigo/setup.bash; cd /home/brendan/catkin_ws; catkin_make -DCMAKE_LIBRARY_PATH=/usr/local/cuda/lib64/stubs'
 RUN chown ${NB_USER1}:${NB_GID} -R /home/brendan/catkin_ws
+
 USER ${NB_USER1}
 
 EXPOSE 8888
