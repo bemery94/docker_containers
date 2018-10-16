@@ -90,7 +90,6 @@ ARG NB_UID1=1000
 ARG NB_GROUP=brendan
 ARG NB_GID=1000
 
-#RUN  useradd brendan && echo "brendan:brendan" | chpasswd && adduser brendan sudo
 RUN groupadd -r ${NB_GROUP} -g ${NB_GID} && \
     useradd -m -s /bin/bash -N -u ${NB_UID1} ${NB_USER1} -g ${NB_GROUP} && \
     mkdir -p /home/${NB_USER1}/ && \
@@ -100,9 +99,7 @@ RUN groupadd -r ${NB_GROUP} -g ${NB_GID} && \
 
 WORKDIR /home/brendan
 
-#COPY --chown=brendan:${NB_GID} ./dotfiles /home/brendan/dotfiles
 COPY ./dotfiles /home/brendan/dotfiles
-#RUN chown ${NB_USER1}:${NB_GID} -R /home/brendan/dotfiles
 RUN /home/brendan/dotfiles/make_sym_links.sh
 
 # Python
