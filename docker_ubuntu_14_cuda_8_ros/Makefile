@@ -20,6 +20,7 @@ PACKAGES="/home/brendan/packages/"
 WORK="/home/brendan/work/"
 DOTFILES="/home/brendan/.bashrc"
 USER_NAME=brendan
+MASTER_IP=172.18.0.22
 ##################################################################
 
 DOCKER=nvidia-docker
@@ -37,11 +38,14 @@ build:
 
 roscore:
 	docker network rm catkin_network 
-	docker network create catkin_network
+	docker network create --subnet=172.18.0.0/16 catkin_network
 	docker run -it --rm \
 		--net catkin_network \
+		--ip ${MASTER_IP} \
+		--env ROS_IP=${MASTER_IP} \
+		--env ROS_MASTER_URI=http://${MASTER_IP}:11311 \
 		--name master \
-		ros:ros-tutorials \
+		bemery94:roscore \
 		roscore
 
 run: 
@@ -51,6 +55,6 @@ run:
 		 --net catkin_network \
 		 --name ${NAME} \
 		 --env ROS_HOSTNAME=${NAME} \
-		 --env ROS_MASTER_URI=http://master:11311 \
+		 --env ROS_MASTER_URI=http://${MASTER_IP}:11311 \
 		bemery94/ubuntu_14_cuda_8_ros bash
 

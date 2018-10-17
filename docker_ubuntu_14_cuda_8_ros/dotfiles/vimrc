@@ -1,0 +1,52 @@
+set nocompatible          " get rid of Vi compatibility mode. SET FIRST!
+filetype plugin indent on " filetype detection[ON] plugin[ON] indent[ON]
+set t_Co=256              " enable 256-color mode.
+syntax enable             " enable syntax highlighting (previously syntax on).
+colorscheme desert        " set colorscheme
+set number                " show line numbers
+set laststatus=2          " last window always has a statusline
+filetype indent on        " activates indenting for files
+set ignorecase            " Make searches case-insensitive.
+set hlsearch            " Don't continue to highlight searched phrases.
+set incsearch             " But do highlight as you type your search.
+set ruler                 " Always show info along bottom.
+set autoindent            " auto-indent
+set tabstop=4             " tab spacing
+set softtabstop=4         " unify
+set shiftwidth=4          " indent/outdent by 4 columns
+set shiftround            " always indent/outdent to the nearest tabstop
+set expandtab             " use spaces instead of tabs
+set smarttab              " use tabs at the start of a line, spaces elsewhere
+set nobackup
+set noswapfile
+
+" Set new keybindings
+:nnoremap dL d$
+:nnoremap dH d^
+:nnoremap L $
+:nnoremap H ^
+:vnoremap L $
+:vnoremap H ^
+:nnoremap J )
+:nnoremap K (
+:inoremap jj <Esc>
+:inoremap <C-z> <C-h>
+:command WQ wq
+:command Wq wq
+:command W w
+:command Q q
+command! -bar -bang Q quit<bang>
+:nnoremap <tab> >>
+:nnoremap <S-tab> <<
+:nmap ; :
+" Stop d from copying to register
+:noremap d "_d
+:noremap dd "_dd
+
+" y and p now copy/paste to/from system keyboard
+set clipboard=unnamedplus
+
+" Highlight .launch files as .xml files
+syntax on
+filetype on
+au BufNewFile,BufRead *.launch set filetype=xml
