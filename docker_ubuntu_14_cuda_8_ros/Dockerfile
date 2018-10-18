@@ -37,6 +37,7 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     g++ \
     gcc \    
+    gdb \
     git \
     libswscale-dev \
     libtbb2 \
@@ -83,6 +84,11 @@ RUN apt-get update && apt-get install -y \
     ros-indigo-tf \
     && rm -rf /var/lib/apt/lists/*
 
+# Forgotten pkgs
+#RUN apt-get update && apt-get install -y \
+#    && rm -rf /var/lib/apt/lists/*
+
+
 # Setup new workspace
 ARG NB_USER1=brendan
 ARG NB_UID1=1000
@@ -111,7 +117,8 @@ RUN /bin/bash -c '. /opt/ros/indigo/setup.bash; catkin_init_workspace /home/bren
 RUN /bin/bash -c '. /opt/ros/indigo/setup.bash; cd /home/brendan/catkin_ws; catkin_make'
 RUN echo "source ~/catkin_ws/devel/setup.bash" >> /home/brendan/.bashrc
 
-RUN /bin/bash -c 'git clone https://github.com/personalrobotics/kinfu_ros.git /home/brendan/catkin_ws/src/kinfu_ros'
+RUN ln -s /home/brendan/work/iit/teleop_force_fields/kinfu_ros /home/brendan/catkin_ws/src
+#RUN /bin/bash -c 'git clone https://github.com/personalrobotics/kinfu_ros.git /home/brendan/catkin_ws/src/kinfu_ros'
 RUN /bin/bash -c '. /opt/ros/indigo/setup.bash; cd /home/brendan/catkin_ws; catkin_make -DCMAKE_LIBRARY_PATH=/usr/local/cuda/lib64/stubs'
 RUN chown ${NB_USER1}:${NB_GID} -R /home/brendan/catkin_ws
 
