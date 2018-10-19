@@ -1,4 +1,19 @@
-set nocompatible          " get rid of Vi compatibility mode. SET FIRST!
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => pazams opinionated- ‘d is for delete’ & ‘ leader-d is for cut’ (shared clipboard register mode)
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" if you are using the yankring plugin, there could be some conflicts.
+" to make the most of these suggested mappings,
+" make sure to delete any keys mapped below from the following line at yankring.vim 
+" (i.e. delete 'x' and 'D'):
+" let g:yankring_n_keys = 'Y D x X'
+
+
+:set nocompatible
+let mapleader = ","
+let g:mapleader = ","
+
+:set background=light
 filetype plugin indent on " filetype detection[ON] plugin[ON] indent[ON]
 set t_Co=256              " enable 256-color mode.
 syntax enable             " enable syntax highlighting (previously syntax on).
@@ -21,8 +36,52 @@ set nobackup
 set noswapfile
 
 " Set new keybindings
-:nnoremap dL d$
-:nnoremap dH d^
+nnoremap x "_x
+nnoremap X "_X
+vnoremap x "_x
+vnoremap X "_X
+nnoremap d "_d
+nnoremap D "_D
+vnoremap d "_d
+nnoremap c "_c
+nnoremap C "_C
+nnoremap dL "_d$
+nnoremap dH "_d^
+nnoremap cL "_c$
+nnoremap cH "_c^
+
+" y and p now copy/paste to/from system keyboard
+set clipboard=unnamedplus
+
+" Highlight .launch files as .xml files
+syntax on
+filetype on
+au BufNewFile,BufRead *.launch set filetype=xml
+
+if has('unnamedplus')
+  set clipboard=unnamed,unnamedplus
+  nnoremap <leader>d "+d
+  nnoremap <leader>D "+D
+  vnoremap <leader>d "+d
+  nnoremap <leader>dL "+d$
+  nnoremap <leader>dH "+d^
+  nnoremap <leader>cL "+c$
+  nnoremap <leader>cH "+c^
+  nnoremap <leader>c "+c
+  nnoremap <leader>C "+C
+else
+  set clipboard=unnamed
+  nnoremap <leader>d "*d
+  nnoremap <leader>D "*D
+  vnoremap <leader>d "*d
+  nnoremap <leader>dL "*d$
+  nnoremap <leader>dH "*d^
+  nnoremap <leader>cL "*c$
+  nnoremap <leader>cH "*c^
+  nnoremap <leader>c "*c
+  nnoremap <leader>C "*C
+endif
+
 :nnoremap L $
 :nnoremap H ^
 :vnoremap L $
@@ -35,18 +94,9 @@ set noswapfile
 :command Wq wq
 :command W w
 :command Q q
-command! -bar -bang Q quit<bang>
+:command! -bar -bang Q quit<bang>
 :nnoremap <tab> >>
 :nnoremap <S-tab> <<
 :nmap ; :
-" Stop d from copying to register
-:noremap d "_d
-:noremap dd "_dd
 
-" y and p now copy/paste to/from system keyboard
-set clipboard=unnamedplus
-
-" Highlight .launch files as .xml files
-syntax on
-filetype on
-au BufNewFile,BufRead *.launch set filetype=xml
+:hi Search guibg=Yellow guifg=Black ctermbg=Yellow ctermfg=Black
