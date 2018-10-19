@@ -1,0 +1,3 @@
+[submodule "docker_ubuntu_14_cuda_8_ros/ros_kinfu"]
+	path = docker_ubuntu_14_cuda_8_ros/ros_kinfu
+	url = https://github.com/bemery94/ros_kinfu.git
