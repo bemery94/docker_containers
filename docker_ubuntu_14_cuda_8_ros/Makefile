@@ -15,7 +15,7 @@ NB_GID=1000
 
 
 ####################### Run arguments ############################
-CATKIN_WS="/home/brendan/catkin_ws/"
+CATKIN_WS="/home/brendan/docker_containers/docker_ubuntu_14_cuda_8_ros/catkin_ws/"
 PACKAGES="/home/brendan/packages/"
 WORK="/home/brendan/work/"
 DOTFILES="/home/brendan/.bashrc"
@@ -52,7 +52,10 @@ run:
 	$(DOCKER) run -it --rm --user ${USER_NAME}:${NB_GROUP} -e GRANT_SUDO=yes \
 	     -v ${WORK}:${WORK} -v ${PACKAGES}:${PACKAGES} \
 		 -v ${BASHRC}:${BASHRC} \
-		 --net catkin_network \
+		 -v ${CATKIN_WS}:/home/brendan/catkin_ws \
+		 --net=host \
+		bemery94/ubuntu_14_cuda_8_ros bash
+		 #--net catkin_network \
 		 --name ${NAME} \
 		 --env ROS_HOSTNAME=${NAME} \
 		 --env ROS_MASTER_URI=http://${MASTER_IP}:11311 \
