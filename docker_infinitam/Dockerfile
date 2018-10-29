@@ -5,11 +5,18 @@ MAINTAINER Brendan Emery <b.emery94@gmail.com>
 # install packages
 RUN apt-get update && apt-get install -q -y \
     autoconf \
+    build-essential \
     dirmngr \
     gnupg2 \
     libtool \
+    libssl-dev \
     lsb-release \
+    openssl \
+    wget \
     && rm -rf /var/lib/apt/lists/*
+
+# install cmake 3.2.3
+RUN wget http://www.cmake.org/files/v3.2/cmake-3.2.3.tar.gz; tar xf cmake-3.2.3.tar.gz; cd cmake-3.2.3; ./bootstrap -- -DCMAKE_USE_OPENSSL=ON; make; sudo make install
 
 # setup keys
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 421C365BD9FF1F717815A3895523BAEEB01FA116
@@ -32,16 +39,21 @@ ENV LC_ALL C.UTF-8
 RUN rosdep init \
     && rosdep update
 
+# install curl with ssl support
+RUN wget wget https://curl.haxx.se/download/curl-7.61.1.tar.gz; tar xf curl-7.61.1.tar.gz; cd curl-7.61.1; ./configure --with-ssl; make; sudo make install
+
 # install ros packages
 ENV ROS_DISTRO indigo
 RUN apt-get update && apt-get install -y \
     ros-indigo-ros-core=1.1.6-0* \
     build-essential \
+    freeglut3-dev \
     g++ \
     gcc \    
     gdb \
     git \
     libeigen3-dev \
+    libxmu-dev \
     ros-indigo-actionlib \
     ros-indigo-cv-bridge \
     ros-indigo-dynamic-reconfigure \
@@ -56,7 +68,6 @@ RUN apt-get update && apt-get install -y \
     ros-indigo-tf2-bullet \
     software-properties-common \
     unzip \
-    wget \
     vim \
     && rm -rf /var/lib/apt/lists/*
 
@@ -78,6 +89,8 @@ WORKDIR /home/brendan
 
 COPY ./dotfiles /home/brendan/dotfiles
 RUN /home/brendan/dotfiles/make_sym_links.sh
+
+COPY ./infinitam_install_script.sh /home/brendan/
 
 # Python
 ARG python_version=2.7

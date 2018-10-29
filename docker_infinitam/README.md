@@ -7,5 +7,4 @@ Build:
 Create an instance of a container: `make run`
 
 # Build ROS pkgs
-* Move the infinitam package out of the catkin_ws and build the rest of the packages:
-```mv /home/brendan/catkin_ws/src/infinitam /home/brendan; cd /home/brendan/catkin_ws; catkin_make; mv /home/brendan/infinitam /home/brendan/catkin_ws/src/infinitam; catkin_make```
+* Run the infinitam_install_script.sh
