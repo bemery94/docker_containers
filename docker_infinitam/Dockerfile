@@ -45,10 +45,13 @@ RUN apt-get update && apt-get install -y \
     ros-indigo-actionlib \
     ros-indigo-cv-bridge \
     ros-indigo-dynamic-reconfigure \
+    ros-indigo-geometry2 \
     ros-indigo-nodelet \
     ros-indigo-nodelet-topic-tools \
     ros-indigo-orocos-kdl \
     ros-indigo-pcl-msgs \
+    ros-indigo-pcl-conversions \
+    ros-indigo-perception-pcl \
     ros-indigo-tf \
     ros-indigo-tf2-bullet \
     software-properties-common \
@@ -56,9 +59,6 @@ RUN apt-get update && apt-get install -y \
     wget \
     vim \
     && rm -rf /var/lib/apt/lists/*
-
-# Install PCL
-
 
 # Setup new workspace
 ARG NB_USER1=brendan
@@ -83,17 +83,7 @@ RUN /home/brendan/dotfiles/make_sym_links.sh
 ARG python_version=2.7
 
 # Create a ROS workspace for the ROS user.
-#RUN mkdir -p /home/brendan/catkin_ws/src
-#RUN /bin/bash -c '. /opt/ros/indigo/setup.bash; catkin_init_workspace /home/brendan/catkin_ws/src'
-#RUN /bin/bash -c '. /opt/ros/indigo/setup.bash; cd /home/brendan/catkin_ws; catkin_make'
 RUN echo "source ~/catkin_ws/devel/setup.bash" >> /home/brendan/.bashrc
-
-# Check if the git repo has been updated, and if so, reset the docker cache so it repulls.
-#ADD https://api.github.com/repos/bemery94/ros_kinfu/git/refs/heads/master version.json
-#RUN /bin/bash -c '. /opt/ros/indigo/setup.bash; cd /home/brendan/catkin_ws/src; git clone https://github.com/bemery94/ros_kinfu.git; cd ..;  catkin_make -DCMAKE_BUILD_TYPE=Debug'
-#RUN rm -r /home/brendan/catkin_ws/src/ros_kinfu/
-#RUN ln -s /home/brendan/work/iit/teleop_force_fields/ros_kinfu/ /home/brendan/catkin_ws/src/
-#RUN chown ${NB_USER1}:${NB_GID} -R /home/brendan/catkin_ws
 
 USER ${NB_USER1}
 
