@@ -38,6 +38,9 @@ build:
 
 run: 
 	$(DOCKER) run -it --rm --user ${USER_NAME}:${NB_GROUP} -e GRANT_SUDO=yes \
+		 -e DISPLAY=${DISPLAY} \
+		 -e QT_X11_NO_MITSHM=1 \
+  		 -v /tmp/.X11-unix:/tmp/.X11-unix:rw --privileged \
 	     -v ${WORK}:${WORK} \
 		 -v ${BASHRC}:${BASHRC} \
 		 -v ${CATKIN_WS}:/home/brendan/catkin_ws \
