@@ -66,6 +66,7 @@ RUN apt-get update && apt-get install -y \
     ros-indigo-perception-pcl \
     ros-indigo-tf \
     ros-indigo-tf2-bullet \
+    python-catkin-tools \
     software-properties-common \
     unzip \
     vim \
