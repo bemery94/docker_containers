@@ -45,6 +45,6 @@ run:
 		 -v ${BASHRC}:${BASHRC} \
 		 -v ${CATKIN_WS}:/home/brendan/catkin_ws \
 		 --net=host \
-		 --priviliged \
+		 --privileged \
 		bemery94/infinitam bash
 
