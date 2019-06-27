@@ -9,9 +9,9 @@ help:
 # Based on jupyter/datascience-notebook
 ####################### Build arguments###########################
 NB_USER1=brendan
-NB_UID1=1000
+NB_UID1=1001
 NB_GROUP=brendan
-NB_GID=1000
+NB_GID=1001
 
 
 ####################### Run arguments ############################
